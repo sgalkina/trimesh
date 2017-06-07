@@ -28,6 +28,8 @@ class SceneViewer(pyglet.window.Window):
         if not ('camera' in scene.graph.nodes):
             scene.set_camera()
 
+        self.reset_view(flags=flags)
+
         visible = (save_image is None) or (platform.system() != 'Linux')
         width, height = resolution
 
@@ -48,7 +50,7 @@ class SceneViewer(pyglet.window.Window):
                                               visible=visible,
                                               width=width,
                                               height=height)
-        self.reset_view(flags=flags)
+
         self.batch = pyglet.graphics.Batch()
         self._img = save_image
         self._smooth = smooth
@@ -120,7 +122,7 @@ class SceneViewer(pyglet.window.Window):
                      'scale': self.scene.scale,
                      'ball': Arcball()}
 
-        if (self.width is not None and
+        if (self._nswindow is not None and self.width is not None and
                 self.height is not None):
             self.view['ball'].place([self.width / 2.0,
                                      self.height / 2.0],
